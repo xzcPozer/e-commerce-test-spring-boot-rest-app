@@ -1,0 +1,25 @@
+services:
+  db:
+    container_name: my_sql_database
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_USER: timur
+      MYSQL_PASSWORD: timur
+      MYSQL_ROOT_PASSWORD: timur
+      MYSQL_DATABASE: dream_shops_db
+    ports:
+      - 33061:3306
+
+  app:
+    container_name: dream_shops
+    build: .
+    restart: always
+    ports:
+      - 9191:9191
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/dream_shops_db
+      - SPRING_DATASOURCE_USERNAME=timur
+      - SPRING_DATASOURCE_PASSWORD=timur
